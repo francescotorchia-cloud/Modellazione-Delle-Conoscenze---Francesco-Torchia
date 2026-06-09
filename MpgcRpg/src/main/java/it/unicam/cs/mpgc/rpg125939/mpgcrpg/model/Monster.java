@@ -12,7 +12,7 @@ public abstract class Monster implements Serializable {
     private final String nome;
     private final int maxHp;
     private final int baseDamage;
-    private final int xpValue;
+    private final int fragmentReward;
 
     private int hp;
 
@@ -22,7 +22,7 @@ public abstract class Monster implements Serializable {
         this.nome = nome;
         this.maxHp = maxHp;
         this.baseDamage = baseDamage;
-        this.xpValue = xpValue;
+        this.fragmentReward = xpValue;
         this.strategy = strategy;
         this.hp = maxHp;
     }
@@ -47,8 +47,8 @@ public abstract class Monster implements Serializable {
         return baseDamage;
     }
 
-    public int getXpValue() {
-        return xpValue;
+    public int getFragmentReward() {
+        return fragmentReward;
     }
 
     public int getHp() {
@@ -61,5 +61,9 @@ public abstract class Monster implements Serializable {
 
     public CombatStrategy getStrategy() {
         return strategy;
+    }
+
+    public void subisciSchivata() {
+        // Di base non fa nulla, lo sovrascriverà solo il Soldato
     }
 }
