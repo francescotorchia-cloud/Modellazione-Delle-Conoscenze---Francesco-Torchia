@@ -1,5 +1,6 @@
-package it.unicam.cs.mpgc.rpg125939.mpgcrpg.model;
+package it.unicam.cs.mpgc.rpg125939.mpgcrpg.model.monsters;
 
+import it.unicam.cs.mpgc.rpg125939.mpgcrpg.model.Monster;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.strategy.TrollStrategy;
 
 public class Troll extends Monster {

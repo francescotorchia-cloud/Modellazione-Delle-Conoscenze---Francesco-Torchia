@@ -66,4 +66,12 @@ public abstract class Monster implements Serializable {
     public void subisciSchivata() {
         // Di base non fa nulla, lo sovrascriverà solo il Soldato
     }
+
+    public int calcolaDannoRicevuto(int dannoBase, MonsterIntent intentoCorrente) {
+        return dannoBase;
+    }
+
+    public int forzaPrecisionePesante(int precisioneGiocatore) {
+        return precisioneGiocatore;
+    }
 }
