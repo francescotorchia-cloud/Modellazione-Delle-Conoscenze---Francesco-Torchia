@@ -4,5 +4,6 @@ public enum GameState {
     MENU,
     COMBAT,
     CHECKPOINT,
-    GAME_OVER
+    GAME_OVER,
+    DIALOGUE
 }
