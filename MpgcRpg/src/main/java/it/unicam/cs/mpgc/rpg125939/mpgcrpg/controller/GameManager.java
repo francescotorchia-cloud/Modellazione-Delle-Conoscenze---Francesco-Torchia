@@ -11,6 +11,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 
 public class GameManager {
 
@@ -25,6 +28,8 @@ public class GameManager {
     private final List<Monster> mostriCorrenti = new ArrayList<>();
     private final Map<Monster, MonsterIntent> intenti = new LinkedHashMap<>();
     private final List<String> log = new ArrayList<>();
+    public static final String PROP_AGGIORNAMENTO = "aggiornamentoModello";
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     private Monster bersaglio;
     private GameState stato = GameState.MENU;
@@ -208,6 +213,20 @@ public class GameManager {
             default:
                 return 0;
         }
+    }
+
+
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    private void notifica() {
+        pcs.firePropertyChange(PROP_AGGIORNAMENTO, null, this);
     }
 
     public boolean isScontroConcluso() {
