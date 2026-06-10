@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg125939.mpgcrpg.model.monsters;
 
+import it.unicam.cs.mpgc.rpg125939.mpgcrpg.enums.FormaGeometrica;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.enums.MonsterIntent;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.model.Monster;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.strategy.ZombieStrategy;
@@ -15,5 +16,15 @@ public class Zombie extends Monster {
     public int calcolaDannoRicevuto(int dannoBase, MonsterIntent intentoCorrente) {
         int riduzione = (intentoCorrente == MonsterIntent.DIFESA) ? 6 : 3;
         return Math.max(0, dannoBase - riduzione);
+    }
+
+    @Override
+    public FormaGeometrica getFormaGeometrica() {
+        return FormaGeometrica.RETTANGOLO;
+    }
+
+    @Override
+    public String getColoreEsadecimale() {
+        return "#6B8E23";
     }
 }

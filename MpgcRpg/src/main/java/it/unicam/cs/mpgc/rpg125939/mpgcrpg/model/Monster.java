@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg125939.mpgcrpg.model;
 
+import it.unicam.cs.mpgc.rpg125939.mpgcrpg.enums.FormaGeometrica;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.enums.MonsterIntent;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.strategy.CombatStrategy;
 
@@ -74,4 +75,8 @@ public abstract class Monster implements Serializable {
     public int forzaPrecisionePesante(int precisioneGiocatore) {
         return precisioneGiocatore;
     }
+
+    public abstract FormaGeometrica getFormaGeometrica();
+
+    public abstract String getColoreEsadecimale();
 }

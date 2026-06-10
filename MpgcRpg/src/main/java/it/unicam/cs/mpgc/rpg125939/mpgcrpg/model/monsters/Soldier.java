@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg125939.mpgcrpg.model.monsters;
 
+import it.unicam.cs.mpgc.rpg125939.mpgcrpg.enums.FormaGeometrica;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.model.Monster;
 import it.unicam.cs.mpgc.rpg125939.mpgcrpg.strategy.SoldierStrategy;
 
@@ -19,5 +20,15 @@ public class Soldier extends Monster {
     @Override
     public int forzaPrecisionePesante(int precisioneGiocatore) {
         return 20;
+    }
+
+    @Override
+    public FormaGeometrica getFormaGeometrica() {
+        return FormaGeometrica.RETTANGOLO;
+    }
+
+    @Override
+    public String getColoreEsadecimale() {
+        return "#4A6FA5";
     }
 }
