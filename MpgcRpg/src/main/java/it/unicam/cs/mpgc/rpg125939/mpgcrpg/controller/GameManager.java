@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Random;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class GameManager {
@@ -20,7 +22,9 @@ public class GameManager {
     private static final int MOLTIPLICATORE_PESANTE = 2;
     private static final double SCHIVATA_BASE = 0.50;
     private static final double FATTORE_POZIONE = 0.20;
-    private static final int CURA_MOSTRO = 15;
+    private static final double FATTORE_CURA_MOSTRO = 0.15;
+    private static final int PRECISIONE_NEBBIA = 30;
+
 
     private final Player player;
     private final Random random = new Random();
@@ -30,6 +34,7 @@ public class GameManager {
     private final List<String> log = new ArrayList<>();
     public static final String PROP_AGGIORNAMENTO = "aggiornamentoModello";
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final Set<Monster> rituSpezzatiTurno = new HashSet<>();
 
     private Monster bersaglio;
     private GameState stato = GameState.MENU;
@@ -71,6 +76,7 @@ public class GameManager {
         if (stato != GameState.COMBAT) {
             return;
         }
+        rituSpezzatiTurno.clear();
 
         boolean haSchivato = false;
         switch (azione) {
@@ -112,6 +118,10 @@ public class GameManager {
             return;
         }
         MonsterIntent intento = intenti.get(bersaglio);
+        if (intento == MonsterIntent.CURA) {
+            log.add("La barriera di " + bersaglio.getNome() + " assorbe il tuo colpo: nessun danno.");
+            return;
+        }
         int danno = bersaglio.calcolaDannoRicevuto(player.getDannoTotale(), intento);
         bersaglio.setHp(bersaglio.getHp() - danno);
         log.add("Colpisci " + bersaglio.getNome() + " con un attacco normale: " + danno + " danni.");
@@ -125,13 +135,20 @@ public class GameManager {
         int precisione = bersaglio.forzaPrecisionePesante(player.getPrecisionePesante());
         if (intento == MonsterIntent.VULNERABILE) {
             precisione = 100;
+        } else if (intento == MonsterIntent.NEBBIA) {
+            precisione = Math.min(precisione, PRECISIONE_NEBBIA);
         }
 
         if (random.nextInt(100) < precisione) {
             int dannoBase = player.getDannoTotale() * MOLTIPLICATORE_PESANTE;
             int danno = bersaglio.calcolaDannoRicevuto(dannoBase, intento);
             bersaglio.setHp(bersaglio.getHp() - danno);
-            log.add("Attacco pesante a segno su " + bersaglio.getNome() + ": " + danno + " danni!");
+            if (intento == MonsterIntent.CURA) {
+                rituSpezzatiTurno.add(bersaglio);
+                log.add("Il tuo attacco pesante spezza il rituale di " + bersaglio.getNome() + ": " + danno + " danni!");
+            } else {
+                log.add("Attacco pesante a segno su " + bersaglio.getNome() + ": " + danno + " danni!");
+            }
         } else {
             log.add("Il tuo attacco pesante manca " + bersaglio.getNome() + "!");
             bersaglio.subisciSchivata();
@@ -175,8 +192,18 @@ public class GameManager {
             MonsterIntent intento = intenti.get(m);
 
             if (intento == MonsterIntent.CURA) {
-                m.setHp(m.getHp() + CURA_MOSTRO);
-                log.add(m.getNome() + " incanala energia e si rigenera.");
+                if (rituSpezzatiTurno.contains(m)) {
+                    log.add(m.getNome() + " non riesce a completare il rituale: la cura è annullata.");
+                } else {
+                    int cura = (int) Math.round(m.getMaxHp() * FATTORE_CURA_MOSTRO);
+                    m.setHp(m.getHp() + cura);
+                    log.add(m.getNome() + " completa il rituale e recupera " + cura + " HP.");
+                }
+                continue;
+            }
+
+            if (intento == MonsterIntent.NEBBIA) {
+                log.add(m.getNome() + " si avvolge in una fitta nebbia: la tua mira ne risentirà.");
                 continue;
             }
 

@@ -7,5 +7,6 @@ public enum MonsterIntent {
     DIFESA,
     CURA,
     VULNERABILE,
-    RECUPERO
+    RECUPERO,
+    NEBBIA
 }
