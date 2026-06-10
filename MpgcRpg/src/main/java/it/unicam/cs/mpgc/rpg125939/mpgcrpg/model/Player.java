@@ -26,7 +26,7 @@ public class Player implements Serializable {
     public Player() {
         this.maxHp = 100;
         this.baseDamage = 10;
-        this.baseLuck = 40;
+        this.baseLuck = 45;
 
         this.hp = this.maxHp;
         this.fragments = 0;

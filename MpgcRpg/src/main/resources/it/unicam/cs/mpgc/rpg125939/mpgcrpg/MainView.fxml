@@ -22,12 +22,12 @@
             <children>
                 <Label text="HP:"/>
                 <ProgressBar fx:id="hpBar" prefWidth="160.0" progress="1.0"/>
-                <Label fx:id="lblHp" text="100/100"/>
-                <Label fx:id="lblForza" text="FOR: 0"/>
-                <Label fx:id="lblFortuna" text="LUK: 0"/>
-                <Label fx:id="lblStanza" text="Stanza: 0"/>
-                <Label fx:id="lblFrammenti" text="Frammenti: 0"/>
-                <Label fx:id="lblPozioni" text="Pozioni: 2"/>
+                <Label fx:id="lblHp" text="-/-"/>
+                <Label fx:id="lblForza" text="FOR: -"/>
+                <Label fx:id="lblFortuna" text="LUK: -"/>
+                <Label fx:id="lblStanza" text="Stanza: -"/>
+                <Label fx:id="lblFrammenti" text="Frammenti: -"/>
+                <Label fx:id="lblPozioni" text="Pozioni: -"/>
             </children>
         </HBox>
     </top>
@@ -47,13 +47,41 @@
             </padding>
             <children>
                 <TextArea fx:id="logArea" editable="false" wrapText="true" prefHeight="150.0"/>
-                <HBox spacing="12.0" alignment="CENTER">
+
+                <HBox fx:id="menuBox" spacing="12.0" alignment="CENTER">
+                    <children>
+                        <Button fx:id="btnNuovaPartita" text="Nuova Partita" onAction="#onNuovaPartita"/>
+                        <Button fx:id="btnCaricaPartita" text="Carica Partita" onAction="#onCaricaPartita"/>
+                    </children>
+                </HBox>
+
+                <HBox fx:id="combatBox" spacing="12.0" alignment="CENTER" visible="false" managed="false">
                     <children>
                         <Button fx:id="btnNormale" text="Attacco Normale" onAction="#onAttaccoNormale"/>
                         <Button fx:id="btnPesante" text="Attacco Pesante" onAction="#onAttaccoPesante"/>
                         <Button fx:id="btnSchivata" text="Schivata" onAction="#onSchivata"/>
                         <Button fx:id="btnPozione" text="Usa Pozione" onAction="#onPozione"/>
+                    </children>
+                </HBox>
+
+                <HBox fx:id="dialogoBox" spacing="12.0" alignment="CENTER" visible="false" managed="false">
+                    <children>
                         <Button fx:id="btnContinua" text="Continua" onAction="#onContinua"/>
+                    </children>
+                </HBox>
+
+                <HBox fx:id="santuarioBox" spacing="12.0" alignment="CENTER" visible="false" managed="false">
+                    <children>
+                        <Button fx:id="btnVit" text="Vitalità" onAction="#onPotenziaVitalita"/>
+                        <Button fx:id="btnFor" text="Forza" onAction="#onPotenziaForza"/>
+                        <Button fx:id="btnLuk" text="Fortuna" onAction="#onPotenziaFortuna"/>
+                        <Button fx:id="btnLasciaSantuario" text="Prosegui" onAction="#onLasciaSantuario"/>
+                    </children>
+                </HBox>
+
+                <HBox fx:id="fineBox" spacing="12.0" alignment="CENTER" visible="false" managed="false">
+                    <children>
+                        <Button fx:id="btnRicomincia" text="Nuova Partita" onAction="#onNuovaPartita"/>
                     </children>
                 </HBox>
             </children>
