@@ -93,6 +93,7 @@ public class GameManager {
 
         if (mostriCorrenti.isEmpty()) {
             log.add("Tutti i nemici sono stati sconfitti.");
+            notifica();
             return;
         }
 
@@ -102,6 +103,8 @@ public class GameManager {
             stato = GameState.GAME_OVER;
             log.add("Sei caduto. Il dungeon reclama un'altra vittima.");
         }
+
+        notifica();
     }
 
     private void risolviAttaccoNormale() {
