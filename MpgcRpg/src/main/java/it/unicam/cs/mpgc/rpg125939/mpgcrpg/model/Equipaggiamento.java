@@ -1,6 +1,8 @@
 package it.unicam.cs.mpgc.rpg125939.mpgcrpg.model;
 
-public interface Equipaggiamento {
+import java.io.Serializable;
+
+public interface Equipaggiamento extends Serializable {
 
     String getNome();
 
