@@ -26,7 +26,7 @@ public class Player implements Serializable {
     public Player() {
         this.maxHp = 100;
         this.baseDamage = 10;
-        this.baseLuck = 45;
+        this.baseLuck = 40;
 
         this.hp = this.maxHp;
         this.fragments = 0;
@@ -36,8 +36,8 @@ public class Player implements Serializable {
         this.forLevel = 0;
         this.lukLevel = 0;
 
-        this.weapon = new Weapon("Spada di Legno Spuntata", 0, 0);
-        this.armor = new Armor("Vestiti Logori", 0, 0);
+        this.weapon = new Weapon("Spada di Legno Spuntata", 0, 0, "Un'arma rudimentale, meglio di niente.");
+        this.armor = new Armor("Vestiti Logori", 0, 0, "Stracci che a malapena coprono.");
     }
 
     public int getDannoTotale() {
@@ -51,6 +51,17 @@ public class Player implements Serializable {
     public int getPrecisionePesante() {
         int precisione = baseLuck + (lukLevel * 2) + weapon.getBonusLuck();
         return Math.min(precisione, CAP_PRECISIONE);
+    }
+
+    public void equipaggiaArmatura(Armor nuovaArmatura) {
+        int hpAttuali = this.hp;
+        this.armor = nuovaArmatura;
+        if (this.hp < hpAttuali) {
+            this.hp = hpAttuali;
+        }
+        if (this.hp > getHpMaxReali()) {
+            this.hp = getHpMaxReali();
+        }
     }
 
     public int getMaxHp() {
