@@ -70,6 +70,13 @@
                     </children>
                 </HBox>
 
+                <HBox fx:id="offertaBox" spacing="12.0" alignment="CENTER" visible="false" managed="false">
+                    <children>
+                        <Button fx:id="btnEquipaggia" text="Equipaggia" onAction="#onEquipaggia"/>
+                        <Button fx:id="btnRifiuta" text="Rifiuta" onAction="#onRifiuta"/>
+                    </children>
+                </HBox>
+
                 <HBox fx:id="santuarioBox" spacing="12.0" alignment="CENTER" visible="false" managed="false">
                     <children>
                         <Button fx:id="btnVit" text="Vitalità" onAction="#onPotenziaVitalita"/>

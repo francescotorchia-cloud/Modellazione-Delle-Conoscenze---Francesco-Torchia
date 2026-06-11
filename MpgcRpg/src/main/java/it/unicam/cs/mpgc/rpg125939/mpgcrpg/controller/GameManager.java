@@ -21,7 +21,7 @@ public class GameManager {
 
     private static final int MOLTIPLICATORE_PESANTE = 2;
     private static final double SCHIVATA_BASE = 0.40;
-    private static final double FATTORE_POZIONE = 0.30;
+    private static final double FATTORE_POZIONE = 0.40;
     private static final double FATTORE_CURA_MOSTRO = 0.15;
     private static final int PRECISIONE_NEBBIA = 30;
 

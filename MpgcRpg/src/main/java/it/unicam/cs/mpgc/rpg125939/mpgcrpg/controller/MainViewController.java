@@ -42,6 +42,7 @@ public class MainViewController implements PropertyChangeListener {
     @FXML private HBox menuBox;
     @FXML private HBox combatBox;
     @FXML private HBox dialogoBox;
+    @FXML private HBox offertaBox;
     @FXML private HBox santuarioBox;
     @FXML private HBox fineBox;
     @FXML private Button btnCaricaPartita;
@@ -100,6 +101,16 @@ public class MainViewController implements PropertyChangeListener {
     @FXML
     private void onContinua() {
         dungeon.continua();
+    }
+
+    @FXML
+    private void onEquipaggia() {
+        dungeon.equipaggiaDono();
+    }
+
+    @FXML
+    private void onRifiuta() {
+        dungeon.rifiutaDono();
     }
 
     @FXML
@@ -231,10 +242,12 @@ public class MainViewController implements PropertyChangeListener {
 
     private void aggiornaPannelli() {
         GameState stato = dungeon.getStato();
+        boolean inOfferta = dungeon.isInOffertaDono();
 
         mostraGruppo(menuBox, stato == GameState.MENU);
         mostraGruppo(combatBox, stato == GameState.COMBAT || stato == GameState.BOSS);
-        mostraGruppo(dialogoBox, stato == GameState.DIALOGUE);
+        mostraGruppo(dialogoBox, stato == GameState.DIALOGUE && !inOfferta);
+        mostraGruppo(offertaBox, stato == GameState.DIALOGUE && inOfferta);
         mostraGruppo(santuarioBox, stato == GameState.CHECKPOINT);
         mostraGruppo(fineBox, stato == GameState.GAME_OVER || stato == GameState.VICTORY);
 
