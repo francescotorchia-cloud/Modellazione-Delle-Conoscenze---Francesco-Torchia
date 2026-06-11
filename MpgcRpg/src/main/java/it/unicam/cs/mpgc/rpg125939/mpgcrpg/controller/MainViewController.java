@@ -160,6 +160,14 @@ public class MainViewController implements PropertyChangeListener {
         int hpMax = p.getHpMaxReali();
         double rapporto = hpMax == 0 ? 0.0 : (double) p.getHp() / hpMax;
         hpBar.setProgress(Math.max(0.0, rapporto));
+        hpBar.getStyleClass().removeAll("hp-high", "hp-mid", "hp-low");
+        if (rapporto > 0.5) {
+            hpBar.getStyleClass().add("hp-high");
+        } else if (rapporto > 0.25) {
+            hpBar.getStyleClass().add("hp-mid");
+        } else {
+            hpBar.getStyleClass().add("hp-low");
+        }
         lblHp.setText(p.getHp() + "/" + hpMax);
         lblForza.setText("FOR: " + p.getForLevel());
         lblFortuna.setText("LUK: " + p.getLukLevel());
@@ -193,6 +201,7 @@ public class MainViewController implements PropertyChangeListener {
         Player p = dungeon.getPlayer();
         Circle corpo = new Circle(40.0, Color.web("#2E86C1"));
         Label nome = new Label("Eroe");
+        nome.getStyleClass().add("combatant-name");
         Label hp = new Label(p.getHp() + " HP");
         VBox box = new VBox(6.0, corpo, nome, hp);
         box.setAlignment(Pos.CENTER);
@@ -207,10 +216,12 @@ public class MainViewController implements PropertyChangeListener {
         }
 
         Label nome = new Label(m.getNome());
+        nome.getStyleClass().add("combatant-name");
         Label hp = new Label(m.getHp() + "/" + m.getMaxHp() + " HP");
 
         MonsterIntent intento = dungeon.getIntenti().get(m);
         Label etichettaIntento = new Label(intento == null ? "-" : intento.toString());
+        etichettaIntento.getStyleClass().add("intent-label");
 
         VBox box = new VBox(6.0, forma, nome, hp, etichettaIntento);
         box.setAlignment(Pos.CENTER);

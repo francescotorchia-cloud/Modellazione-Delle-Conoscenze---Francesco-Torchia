@@ -1,0 +1,148 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #1a1714, #0d0b09);
+    -fx-font-family: "Georgia", "Times New Roman", serif;
+}
+
+.top-bar {
+    -fx-background-color: linear-gradient(to bottom, #2b2620, #1c1814);
+    -fx-border-color: #3d342a;
+    -fx-border-width: 0 0 2 0;
+}
+
+.top-bar .label {
+    -fx-text-fill: #c9b896;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.arena {
+    -fx-background-color: radial-gradient(center 50% 40%, radius 70%, #241f1a, #0d0b09);
+}
+
+.arena .label {
+    -fx-text-fill: #b8a888;
+    -fx-font-size: 13px;
+}
+
+.combatant-name {
+    -fx-text-fill: #d4c4a0;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.intent-label {
+    -fx-text-fill: #a89878;
+    -fx-font-style: italic;
+    -fx-font-size: 12px;
+}
+
+.log-area {
+    -fx-control-inner-background: #15110d;
+    -fx-background-color: #15110d;
+    -fx-border-color: #3d342a;
+    -fx-border-width: 2;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 13px;
+}
+
+.log-area .content {
+    -fx-background-color: #15110d;
+}
+
+.log-area .text {
+    -fx-fill: #b5a585;
+}
+
+.log-area .scroll-pane {
+    -fx-background-color: #15110d;
+}
+
+.log-area .scroll-pane .viewport {
+    -fx-background-color: #15110d;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #3a322a, #251f1a);
+    -fx-text-fill: #cbb994;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-border-color: #4a3f33;
+    -fx-border-width: 1.5;
+    -fx-padding: 8 18 8 18;
+    -fx-background-radius: 2;
+    -fx-border-radius: 2;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #4a4036, #322a22);
+    -fx-text-fill: #e8d8b0;
+    -fx-border-color: #6b5a45;
+}
+
+.button:pressed {
+    -fx-background-color: #1c1814;
+}
+
+.button:disabled {
+    -fx-opacity: 0.4;
+}
+
+.btn-attacco {
+    -fx-border-color: #6e2a24;
+}
+
+.btn-attacco:hover {
+    -fx-background-color: linear-gradient(to bottom, #5a322c, #3a201c);
+    -fx-border-color: #9e3a30;
+}
+
+.btn-schivata {
+    -fx-border-color: #2a4a5a;
+}
+
+.btn-schivata:hover {
+    -fx-background-color: linear-gradient(to bottom, #2c4452, #1c2e38);
+    -fx-border-color: #3a6678;
+}
+
+.btn-pozione {
+    -fx-border-color: #3a5a2a;
+}
+
+.btn-pozione:hover {
+    -fx-background-color: linear-gradient(to bottom, #324a24, #20301a);
+    -fx-border-color: #4a7034;
+}
+
+.btn-conferma {
+    -fx-border-color: #7a6420;
+}
+
+.btn-conferma:hover {
+    -fx-background-color: linear-gradient(to bottom, #5a4a20, #3a3014);
+    -fx-border-color: #a08838;
+}
+
+.hp-bar > .bar {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.hp-bar > .track {
+    -fx-background-color: #2a1c1c;
+    -fx-background-radius: 0;
+}
+
+.hp-high > .bar {
+    -fx-background-color: linear-gradient(to bottom, #6a9a4a, #4a7434);
+}
+
+.hp-mid > .bar {
+    -fx-background-color: linear-gradient(to bottom, #c4a838, #9a8424);
+}
+
+.hp-low > .bar {
+    -fx-background-color: linear-gradient(to bottom, #b04434, #8a2c20);
+}

@@ -11,8 +11,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("Tiny Dungeon");
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
