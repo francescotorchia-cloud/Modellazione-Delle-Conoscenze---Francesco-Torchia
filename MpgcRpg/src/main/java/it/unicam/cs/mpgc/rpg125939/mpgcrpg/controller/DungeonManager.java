@@ -115,8 +115,10 @@ public class DungeonManager {
 
     private void risolviSantuario(Room stanza) {
         player.setHp(player.getHpMaxReali());
+        player.setPotionCount(player.getPotionCount() + 1);
         stato = GameState.CHECKPOINT;
         log.add("Raggiungi il " + stanza.getNome() + ". Le tue ferite si rimarginano del tutto.");
+        log.add("Trovi una pozione tra le offerte del Santuario.");
         try {
             saveManager.salva(new GameSnapshot(player, progress));
             log.add("Progressi incisi nella pietra del Santuario.");
@@ -261,6 +263,8 @@ public class DungeonManager {
 
     private List<Room> costruisciDungeon() {
         List<Room> r = new ArrayList<>();
+        Equipaggiamento donoCavaliere = CatalogoEquipaggiamento.donoCasuale(random);
+        Equipaggiamento donoEsploratore = CatalogoEquipaggiamento.donoCasualeDiverso(random, donoCavaliere);
         r.add(Room.dialogo(creaSaggio()));
         r.add(Room.combattimento("Cripta d'Ingresso", () -> List.of(new Skeleton())));
         r.add(Room.combattimento("Ossario", () -> List.of(new Skeleton(), new Skeleton())));
@@ -268,7 +272,7 @@ public class DungeonManager {
         r.add(Room.combattimento("Galleria Putrida", () -> List.of(new Zombie())));
         r.add(Room.combattimento("Fossa Comune", () -> List.of(new Zombie(), new Skeleton())));
         r.add(Room.santuario("Santuario II"));
-        r.add(Room.dialogo(creaCavaliere()));
+        r.add(Room.dialogo(creaCavaliere(donoCavaliere)));
         r.add(Room.combattimento("Corpo di Guardia", () -> List.of(new Soldier())));
         r.add(Room.combattimento("Sala d'Armi", () -> List.of(new Soldier(), new Zombie())));
         r.add(Room.santuario("Santuario III"));
@@ -278,7 +282,7 @@ public class DungeonManager {
         r.add(Room.combattimento("Caverna Profonda", () -> List.of(new Troll(), new Soldier())));
         r.add(Room.combattimento("Nido Oscuro", () -> List.of(new Troll(), new Zombie())));
         r.add(Room.santuario("Santuario V"));
-        r.add(Room.dialogo(creaEsploratore()));
+        r.add(Room.dialogo(creaEsploratore(donoEsploratore)));
         r.add(Room.combattimento("Vestibolo del Signore", () -> List.of(new Troll(), new Soldier(), new Zombie())));
         r.add(Room.combattimento("Soglia Finale", () -> List.of(new Troll(), new Troll())));
         r.add(Room.santuario("Santuario Finale"));
@@ -297,23 +301,23 @@ public class DungeonManager {
         ));
     }
 
-    private NPC creaCavaliere() {
+    private NPC creaCavaliere(Equipaggiamento dono) {
         return new NPC("Cavaliere Caduto", List.of(
                 "Fermati... non ho più la forza per impugnare la spada, ma posso ancora metterti in guardia.",
                 "Le guardie del dungeon sono troppo agili: i colpi pesanti le mancano quasi sempre.",
                 "Sgretola la loro salute con attacchi rapidi e continui. È l'unico modo per averne ragione.",
                 "Prima che tu vada, prendi questo. A me non serve più."
-        ), CatalogoEquipaggiamento.donoCasuale(random));
+        ), dono);
     }
 
-    private NPC creaEsploratore() {
+    private NPC creaEsploratore(Equipaggiamento dono) {
         return new NPC("Esploratore Terrorizzato", List.of(
                 "Indietro! No... aspetta. Se sei giunto fin qui, devi sapere come affrontarlo.",
                 "Il Signore del Dungeon è un mostro antico, e si rigenera.",
                 "Quando evoca la sua barriera magica non provare a difenderti: sta canalizzando un incantesimo di guarigione.",
                 "Colpiscilo con un Attacco Pesante per spezzare il rituale. È la sua unica, vera debolezza.",
                 "Ho trovato questo nel mio cammino. Tienilo, io non andrò oltre."
-        ), CatalogoEquipaggiamento.donoCasuale(random));
+        ), dono);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

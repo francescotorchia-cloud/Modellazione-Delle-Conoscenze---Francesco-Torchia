@@ -282,16 +282,10 @@ public class MainViewController implements PropertyChangeListener {
     private void mostraEasterEgg() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Tiny Dungeon — Epilogo");
-        alert.setHeaderText("Hai sconfitto il Signore del Dungeon.");
+        alert.setHeaderText("Hai sconfitto Fabrizio Fornari");
         alert.setContentText(
                 "Ma la vera sfida era un'altra.\n\n"
-                        + "Mentre giocavi hai messo alla prova quattro pilastri:\n"
-                        + "• MVC — un Model puro, ignaro della grafica\n"
-                        + "• Observer — eventi nativi, senza guinzaglio sulla View\n"
-                        + "• State — la FSM che ha orchestrato ogni tua mossa\n"
-                        + "• Strategy — i cervelli intercambiabili dei mostri\n\n"
-                        + "Quattro pattern, un solo eroe.\n"
-                        + "Che la commissione sia con te.");
+                        + "Ti sei laureato!.");
         alert.showAndWait();
     }
 }

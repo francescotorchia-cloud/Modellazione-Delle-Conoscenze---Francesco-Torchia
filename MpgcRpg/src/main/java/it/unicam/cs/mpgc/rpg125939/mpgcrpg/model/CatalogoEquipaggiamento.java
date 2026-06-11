@@ -36,4 +36,12 @@ public final class CatalogoEquipaggiamento {
         }
         return armaturaCasuale(random);
     }
+
+    public static Equipaggiamento donoCasualeDiverso(Random random, Equipaggiamento giaScelto) {
+        Equipaggiamento candidato;
+        do {
+            candidato = donoCasuale(random);
+        } while (giaScelto != null && candidato.getNome().equals(giaScelto.getNome()));
+        return candidato;
+    }
 }
