@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class DungeonManager {
 
@@ -26,6 +27,7 @@ public class DungeonManager {
     private static final int COSTO_POTENZIAMENTO = 15;
 
     private final SaveManager saveManager;
+    private final Random random = new Random();
     private final List<Room> stanze;
     private final List<String> log = new ArrayList<>();
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -35,6 +37,7 @@ public class DungeonManager {
     private GameManager combatCorrente;
     private NPC npcCorrente;
     private GameState stato;
+    private boolean inOffertaDono;
 
     public DungeonManager(SaveManager saveManager) {
         this.saveManager = saveManager;
@@ -76,6 +79,7 @@ public class DungeonManager {
         Room stanza = stanze.get(indice);
         this.combatCorrente = null;
         this.npcCorrente = null;
+        this.inOffertaDono = false;
 
         switch (stanza.getTipo()) {
             case DIALOGO:
@@ -148,15 +152,48 @@ public class DungeonManager {
     }
 
     public void continua() {
-        if (stato != GameState.DIALOGUE || npcCorrente == null) {
+        if (stato != GameState.DIALOGUE || npcCorrente == null || inOffertaDono) {
             return;
         }
         if (npcCorrente.haAltreBattute()) {
             mostraProssimaBattuta();
             notifica();
-        } else {
-            avanza();
+            return;
         }
+        if (npcCorrente.haDono()) {
+            avviaOffertaDono();
+            return;
+        }
+        avanza();
+    }
+
+    private void avviaOffertaDono() {
+        inOffertaDono = true;
+        Equipaggiamento dono = npcCorrente.getDono();
+        log.add("— " + npcCorrente.getNome() + " ti porge qualcosa —");
+        log.add("In offerta: " + dono.riepilogoStat());
+        log.add("Equipaggiato ora: " + dono.equipaggiatoAttuale(player).riepilogoStat());
+        notifica();
+    }
+
+    public void equipaggiaDono() {
+        if (!inOffertaDono || npcCorrente == null || !npcCorrente.haDono()) {
+            return;
+        }
+        Equipaggiamento dono = npcCorrente.getDono();
+        dono.equipaggia(player);
+        log.add("Hai equipaggiato: " + dono.getNome() + ".");
+        inOffertaDono = false;
+        avanza();
+    }
+
+    public void rifiutaDono() {
+        if (!inOffertaDono) {
+            return;
+        }
+        log.add("Hai rifiutato il dono e conservato il tuo equipaggiamento attuale.");
+        inOffertaDono = false;
+        avanza();
     }
 
     public void lasciaSantuario() {
@@ -264,8 +301,9 @@ public class DungeonManager {
         return new NPC("Cavaliere Caduto", List.of(
                 "Fermati... non ho più la forza per impugnare la spada, ma posso ancora metterti in guardia.",
                 "Le guardie del dungeon sono troppo agili: i colpi pesanti le mancano quasi sempre.",
-                "Sgretola la loro salute con attacchi rapidi e continui. È l'unico modo per averne ragione."
-        ));
+                "Sgretola la loro salute con attacchi rapidi e continui. È l'unico modo per averne ragione.",
+                "Prima che tu vada, prendi questo. A me non serve più."
+        ), CatalogoEquipaggiamento.donoCasuale(random));
     }
 
     private NPC creaEsploratore() {
@@ -273,8 +311,9 @@ public class DungeonManager {
                 "Indietro! No... aspetta. Se sei giunto fin qui, devi sapere come affrontarlo.",
                 "Il Signore del Dungeon è un mostro antico, e si rigenera.",
                 "Quando evoca la sua barriera magica non provare a difenderti: sta canalizzando un incantesimo di guarigione.",
-                "Colpiscilo con un Attacco Pesante per spezzare il rituale. È la sua unica, vera debolezza."
-        ));
+                "Colpiscilo con un Attacco Pesante per spezzare il rituale. È la sua unica, vera debolezza.",
+                "Ho trovato questo nel mio cammino. Tienilo, io non andrò oltre."
+        ), CatalogoEquipaggiamento.donoCasuale(random));
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -303,6 +342,14 @@ public class DungeonManager {
 
     public NPC getNpcCorrente() {
         return npcCorrente;
+    }
+
+    public boolean isInOffertaDono() {
+        return inOffertaDono;
+    }
+
+    public Equipaggiamento getDonoCorrente() {
+        return npcCorrente != null ? npcCorrente.getDono() : null;
     }
 
     public int getCostoPotenziamento() {
