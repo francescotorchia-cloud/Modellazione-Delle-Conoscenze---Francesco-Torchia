@@ -19,11 +19,11 @@ public abstract class Monster implements Serializable {
 
     private final CombatStrategy strategy;
 
-    protected Monster(String nome, int maxHp, int baseDamage, int xpValue, CombatStrategy strategy) {
+    protected Monster(String nome, int maxHp, int baseDamage, int fragmentReward, CombatStrategy strategy) {
         this.nome = nome;
         this.maxHp = maxHp;
         this.baseDamage = baseDamage;
-        this.fragmentReward = xpValue;
+        this.fragmentReward = fragmentReward;
         this.strategy = strategy;
         this.hp = maxHp;
     }
