@@ -2,7 +2,7 @@ plugins {
     java
     application
     id("org.javamodularity.moduleplugin") version "1.8.15"
-    id("org.openjfx.javafxplugin") version "0.0.13"
+    id("org.openjfx.javafxplugin") version "0.1.0"
     id("org.beryx.jlink") version "2.25.0"
 }
 
@@ -17,7 +17,7 @@ val junitVersion = "5.12.1"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -27,7 +27,7 @@ tasks.withType<JavaCompile> {
 
 application {
     mainModule.set("it.unicam.cs.mpgc.rpg125939.mpgcrpg")
-    mainClass.set("it.unicam.cs.mpgc.rpg125939.mpgcrpg.HelloApplication")
+    mainClass.set("it.unicam.cs.mpgc.rpg125939.mpgcrpg.Main")
 }
 
 javafx {
